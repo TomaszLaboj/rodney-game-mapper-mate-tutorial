@@ -27,13 +27,13 @@ class Player {
     if (this.isImageLoaded) {
       const cropbox = {
         x: 0,
-        y: 64,
+        y: 0,
         width: 32,
         height: 32,
       }
       c.drawImage(
         this.image,
-        cropbox.x,
+        cropbox.x + cropbox.width * this.currentFrame,
         cropbox.y,
         cropbox.width,
         cropbox.height,
@@ -49,6 +49,14 @@ class Player {
   update(deltaTime, collisionBlocks) {
     if (!deltaTime) return
     this.applyGravity(deltaTime)
+
+    //updating animation frames
+    this.elapsedTime += deltaTime
+    if (this.elapsedTime > 0.1) {
+      this.currentFrame = (this.currentFrame + 1) % 2
+
+    }
+
 
     // Update horizontal position and check collisions
     this.updateHorizontalPosition(deltaTime)
